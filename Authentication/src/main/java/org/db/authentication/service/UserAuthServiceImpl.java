@@ -71,7 +71,8 @@ public class UserAuthServiceImpl implements UserAuthService {
 
 
         return JwtResponse.builder()
-                .token(jwt).email(userDetails.getEmail())
+                .token(jwt)
+                .email(userDetails.getEmail())
                 .build();
     }
 
