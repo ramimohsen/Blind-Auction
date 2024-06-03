@@ -43,14 +43,19 @@ public class UserAuthServiceImpl implements UserAuthService {
             throw new UserAlreadyExistException(String.format("User with email %s already exists", userSignUpRequest.getEmail()));
 
         try {
+
             User user = userRepository.save(User.builder()
                     .email(userSignUpRequest.getEmail())
                     .registrationDate(LocalDateTime.now())
                     .password(encoder.encode(userSignUpRequest.getPassword()))
+                    .userType(userSignUpRequest.getUserType())
                     .build());
             return UserSignUpResponse.builder()
                     .email(user.getEmail())
-                    .success(true).build();
+                    .success(true)
+                    .userType(user.getUserType())
+                    .build();
+
         } catch (Exception e) {
             log.error("Error occurred while saving user: {}", e.getMessage());
             return UserSignUpResponse.builder()

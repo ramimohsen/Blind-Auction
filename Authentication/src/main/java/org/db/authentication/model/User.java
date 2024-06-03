@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.db.authentication.dto.UserType;
 
 import java.time.LocalDateTime;
 
@@ -35,4 +36,7 @@ public class User {
     @NotNull
     private LocalDateTime registrationDate;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 }

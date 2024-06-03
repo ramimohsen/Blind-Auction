@@ -3,6 +3,7 @@ package org.db.authentication.service.security;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +18,10 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
     private String password;
+
+    @Getter
+    private String userType;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

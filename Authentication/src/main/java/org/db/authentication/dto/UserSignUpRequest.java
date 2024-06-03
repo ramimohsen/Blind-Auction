@@ -22,4 +22,7 @@ public class UserSignUpRequest {
     @NotNull
     @Size(min = 6, max = 30)
     private String password;
+
+    @NotNull
+    private UserType userType;
 }
