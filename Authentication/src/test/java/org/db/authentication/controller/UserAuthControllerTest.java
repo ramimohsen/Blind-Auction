@@ -30,7 +30,7 @@ class UserAuthControllerTest {
     void testRegisterUser() throws Exception {
         mockMvc.perform(post("/api/user/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"email\":\"testUser@gmail.com\", \"password\":\"testPassword\"}"))
+                        .content("{\"email\":\"testUser@gmail.com\", \"password\":\"testPassword\" , \"userType\":\"SELLER\"}"))
                 .andExpect(status().isOk());
     }
 
