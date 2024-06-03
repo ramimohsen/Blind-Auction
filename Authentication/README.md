@@ -35,6 +35,7 @@ The service has the following endpoints:
 
 - POST /auth/register
 - POST /auth/login
+- GET /auth/validate
 
 ## Testing
 
