@@ -1,6 +1,9 @@
 package org.db.authentication.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.db.authentication.dto.UserSignUpRequest;
+import org.db.authentication.dto.ValidateTokenRequest;
+import org.db.authentication.dto.ValidateTokenResponse;
 import org.db.authentication.exception.custom.UserAlreadyExistException;
 import org.db.authentication.service.UserAuthService;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,4 +57,21 @@ class UserAuthControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void testValidateToken() throws Exception {
+        // Arrange
+        ValidateTokenRequest request = new ValidateTokenRequest();
+        request.setToken("validToken");
+
+        ValidateTokenResponse response = new ValidateTokenResponse();
+        response.setValid(true);
+
+        Mockito.when(userAuthService.validateToken(anyString())).thenReturn(response);
+
+        // Act & Assert
+        mockMvc.perform(post("/api/user/auth/validate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(request)))
+                .andExpect(status().isOk());
+    }
 }

@@ -4,14 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.db.authentication.dto.JwtResponse;
-import org.db.authentication.dto.UserLoginRequest;
-import org.db.authentication.dto.UserSignUpRequest;
-import org.db.authentication.dto.UserSignUpResponse;
+import org.db.authentication.dto.*;
 import org.db.authentication.exception.custom.UserAlreadyExistException;
 import org.db.authentication.exception.response.ErrorDetails;
 import org.db.authentication.service.UserAuthService;
@@ -44,5 +40,13 @@ public class UserAuthController {
     @PostMapping("/auth/login")
     public JwtResponse authenticate(@RequestBody @Valid UserLoginRequest userLoginRequest) {
         return this.userAuthService.authenticate(userLoginRequest);
+    }
+
+    @Operation(summary = "Validate JWT")
+    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValidateTokenResponse.class), mediaType = "application/json")})
+    @ApiResponse(responseCode = "401", content = {@Content(schema = @Schema(implementation = ErrorDetails.class), mediaType = "application/json")})
+    @PostMapping("/auth/validate")
+    public ValidateTokenResponse validateToken(@RequestBody @Valid ValidateTokenRequest request) {
+        return this.userAuthService.validateToken(request.getToken());
     }
 }

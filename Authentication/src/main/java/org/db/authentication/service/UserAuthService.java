@@ -1,9 +1,6 @@
 package org.db.authentication.service;
 
-import org.db.authentication.dto.JwtResponse;
-import org.db.authentication.dto.UserLoginRequest;
-import org.db.authentication.dto.UserSignUpRequest;
-import org.db.authentication.dto.UserSignUpResponse;
+import org.db.authentication.dto.*;
 import org.db.authentication.exception.custom.UserAlreadyExistException;
 
 public interface UserAuthService {
@@ -22,4 +19,9 @@ public interface UserAuthService {
      */
     JwtResponse authenticate(UserLoginRequest userLoginRequest);
 
+    /**
+     * @param token JWT token
+     * @return @{@link ValidateTokenResponse} if token is valid
+     */
+    ValidateTokenResponse validateToken(String token);
 }

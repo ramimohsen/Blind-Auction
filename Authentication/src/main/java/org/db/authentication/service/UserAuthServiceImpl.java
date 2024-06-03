@@ -2,10 +2,7 @@ package org.db.authentication.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.db.authentication.dto.JwtResponse;
-import org.db.authentication.dto.UserLoginRequest;
-import org.db.authentication.dto.UserSignUpRequest;
-import org.db.authentication.dto.UserSignUpResponse;
+import org.db.authentication.dto.*;
 import org.db.authentication.exception.custom.UserAlreadyExistException;
 import org.db.authentication.model.User;
 import org.db.authentication.repository.UserRepository;
@@ -78,6 +75,14 @@ public class UserAuthServiceImpl implements UserAuthService {
         return JwtResponse.builder()
                 .token(jwt)
                 .email(userDetails.getEmail())
+                .build();
+    }
+
+    @Override
+    public ValidateTokenResponse validateToken(String token) {
+        return ValidateTokenResponse.builder()
+                .valid(jwtUtils.validateJwtToken(token))
+                .userType(jwtUtils.getUserTypeFromJwtToken(token))
                 .build();
     }
 
